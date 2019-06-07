@@ -18,6 +18,7 @@ Route::get('/songs/plays/{start?}','ApiController@topPlayed');
 Route::get('/songs/new/{start?}','ApiController@newest');
 Route::get('/songs/rated/{start?}','ApiController@topRated');
 Route::get('/songs/byuser/{id}/{start?}','ApiController@byUser');
+Route::get('/genres','ApiController@getGenre');
 Route::get('/songs/detail/{key}','ApiController@detail');
 Route::get('/songs/vote/{key}/{type}/{accessToken}', 'ApiController@vote');
 Route::post('/songs/voteById/{key}/{type}', 'ApiController@voteById');

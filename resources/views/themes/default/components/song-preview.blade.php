@@ -1,7 +1,7 @@
 <a href="{{ $linkUrl }}"><h2>{{ $name }}</h2></a>
 <table id="song-{{ $id }}" class="table" style="table-layout:fixed;">
     <tr>
-        <th rowspan="5" style="width: 15%;" class="text-center">
+        <th rowspan="6" style="width: 15%;" class="text-center">
             <div>
                 <img src="{{ $coverUrl }}" alt="{{ $name }}" style="min-width: 10em; max-width: 10em;">
             </div>
@@ -21,6 +21,13 @@
     <tr>
         <td>Author: {{ $authorName }}</td>
         <td>Difficulties: {{ $difficulties }}</td>
+    </tr>
+    <tr>
+        <td>
+            Genre: {{ $genre }}
+        </td> 
+        <td>
+        </td>
     </tr>
     <tr>
         <td>

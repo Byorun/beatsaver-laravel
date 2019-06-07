@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use App\Models\AccessToken;
 use App\SongComposerApi;
 use App\SongListComposerApi;
+use App\GenreComposer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Response;
@@ -82,6 +83,18 @@ class ApiController extends Controller
         $total = $composer->getUserSongCount($id);
 
         return Response::json(['songs' => $songs, 'total' => $total]);
+    }
+
+    /**
+     * @param GenreComposer $composer
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getGenre(GenreComposer $composer)
+    {
+        $genres = $composer->getGenres();
+
+        return Response::json(['genres' => $genres]);
     }
 
     /**

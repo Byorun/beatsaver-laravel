@@ -9,6 +9,7 @@ use App\Http\Requests\UploadRequest;
 use App\Http\Requests\VoteRequest;
 use App\Models\Song;
 use App\Models\User;
+use App\GenreComposer;
 use App\SongComposer;
 use App\SongListComposer;
 use Illuminate\Http\Request;
@@ -163,9 +164,9 @@ class BeatSaverController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function upload()
+    public function upload(GenreComposer $composer)
     {
-        return view('master.page-song-upload');
+        return view('master.page-song-upload')->with('genres', $composer->getGenres());
     }
 
     /**
@@ -186,6 +187,7 @@ class BeatSaverController extends Controller
             'songId'      => null,
             'name'        => $request->input('name'),
             'description' => $request->input('description'),
+            'genreId'     => $request->input('genre_id'),
         ];
 
         $song = $composer->create($metadata, $process);
@@ -259,12 +261,12 @@ class BeatSaverController extends Controller
     }
 
 
-    public function songEdit($id, SongComposer $composer)
+    public function songEdit($id, SongComposer $composer, GenreComposer $genreComposer)
     {
         $song = $composer->get($id);
 
         if ($song && auth()->id() == $song['uploaderId']) {
-            return view('master.page-song-edit')->with(['song' => $song]);
+            return view('master.page-song-edit')->with(['song' => $song])->with('genres', $genreComposer->getGenres());
         }
 
         return redirect()->route('browse.user', ['id' => auth()->id()]);
@@ -291,7 +293,7 @@ class BeatSaverController extends Controller
             $process = false;
         }
 
-        $metadata = $request->only(['name', 'description']);
+        $metadata = $request->only(['name', 'description', 'genre_id']);
         $metadata['userId'] = auth()->id();
         $metadata['updateFile'] = $process;
         $metadata['songId'] = $song->id;
